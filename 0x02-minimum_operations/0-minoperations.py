@@ -1,5 +1,6 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 """A module that contains the minOperations function"""
+
 
 def minOperations(n):
     """
