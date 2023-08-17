@@ -1,73 +1,32 @@
 #!/usr/bin/python3
 """0-stats"""
 import sys
-import signal
-import re
 
 
-def print_stat(file_size: int, status_code: dict) -> None:
-    """prints the stats to the screen"""
-    print(f"File size: {file_size}")
-    for key in status_code.keys():
-        if status_code[key] > 0:
-            print(f"{key}: {status_code[key]}")
+status_codes = [200, 301, 400, 401, 403, 404, 405, 500]
+code_count = {code: 0 for code in status_codes}
+total_size = 0
+line_count = 0
 
-
-def check_input(line: str) -> bool:
-    """check valid input"""
-    regex = (
-            r'^(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}) - '
-            r'\[(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\.\d+)\] '
-            r'"GET \/projects\/\d+ HTTP\/1\.1" '
-            r'(\d{3}) (\d+)$'
-        )
-
-    match = re.match(regex, line)
-    if match:
-        return True
-    return False
-
-
-def parse_input(line: str, status_code: dict) -> int:
-    file_size: int = 0
-    """parse the input"""
-    if check_input(line):
-        line_args = line.split()
-        code: int = line_args[-2]
-        file_size = int(line_args[-1])
-
-    if code in status_code:
-        status_code[code] += 1
-        return file_size
-    status_code[code] = 1
-    return file_size
-
-
-def signal_handler(sig, frame):
-    print_stat(file_size, status_code)
-    sys.exit(0)
-
-
-def main():
-    """program entry"""
-    num_of_lines: int = 0
-    global file_size
-    global status_code
-
-    file_size = 0
-    status_code = {}
-
-    signal.signal(signal.SIGINT, signal_handler)
-
-    try:
-        for line in sys.stdin:
-            file_size += parse_input(line, status_code)
-            num_of_lines += 1
-            if num_of_lines % 10 == 0:
-                print_stat(file_size, status_code)
-    except Exception:
-        pass
-
-
-if __name__ == "__main__":
-    main()
+try:
+    for line in sys.stdin:
+        line_count += 1
+        data = line.split()
+        if len(data) > 2:
+            status_code = data[-2]
+            file_size = data[-1]
+            if status_code.isdigit() and file_size.isdigit():
+                code_count[int(status_code)] += 1
+                total_size += int(file_size)
+        if line_count % 10 == 0:
+            print("File size: {}".format(total_size))
+            for code in sorted(code_count.keys()):
+                if code_count[code] > 0:
+                    print("{}: {}".format(code, code_count[code]))
+except KeyboardInterrupt:
+    pass
+finally:
+    print("File size: {}".format(total_size))
+    for code in sorted(code_count.keys()):
+        if code_count[code] > 0:
+            print("{}: {}".format(code, code_count[code]))
