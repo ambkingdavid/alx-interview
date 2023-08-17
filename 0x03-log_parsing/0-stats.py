@@ -2,19 +2,10 @@
 """0-stats"""
 import sys
 
-
 status_codes = [200, 301, 400, 401, 403, 404, 405, 500]
 code_count = {code: 0 for code in status_codes}
 total_size = 0
 line_count = 0
-
-
-def print_stats():
-    print("File size: {}".format(total_size))
-    for code in sorted(code_count.keys()):
-        if code_count[code] > 0:
-            print("{}: {}".format(code, code_count[code]))
-
 
 try:
     for line in sys.stdin:
@@ -27,6 +18,14 @@ try:
                 code_count[status_code] += 1
                 total_size += file_size
         if line_count % 10 == 0:
-            print_stats()
+            print("File size: {}".format(total_size))
+            for code in sorted(code_count.keys()):
+                if code_count[code] > 0:
+                    print("{}: {}".format(code, code_count[code]))
 except KeyboardInterrupt:
-    print_stats()
+    pass
+finally:
+    print("File size: {}".format(total_size))
+    for code in sorted(code_count.keys()):
+        if code_count[code] > 0:
+            print("{}: {}".format(code, code_count[code]))
