@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""0-stats"""
 import sys
 import signal
 import re
@@ -11,19 +12,21 @@ def print_stat(file_size: int, status_code: dict) -> None:
         if status_code[key] > 0:
             print(f"{key}: {status_code[key]}")
 
+
 def check_input(line: str) -> bool:
     """check valid input"""
     regex = (
-    r'^(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}) - '
-    r'\[(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\.\d+)\] '
-    r'"GET \/projects\/\d+ HTTP\/1\.1" '
-    r'(\d{3}) (\d+)$'
-    )
+            r'^(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}) - '
+            r'\[(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\.\d+)\] '
+            r'"GET \/projects\/\d+ HTTP\/1\.1" '
+            r'(\d{3}) (\d+)$'
+        )
 
     match = re.match(regex, line)
     if match:
         return True
     return False
+
 
 def parse_input(line: str, status_code: dict) -> int:
     file_size: int = 0
@@ -62,7 +65,7 @@ def main():
             num_of_lines += 1
             if num_of_lines % 10 == 0:
                 print_stat(file_size, status_code)
-    except:
+    except Exception:
         pass
 
 
