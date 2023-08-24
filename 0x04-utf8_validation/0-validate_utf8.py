@@ -3,6 +3,7 @@
 A module
 """
 
+
 def validUTF8(data):
     """
     UTF8 validator method
@@ -36,6 +37,6 @@ def validUTF8(data):
         # Reduce the count of bytes left in the current character
         bytes_left -= 1
 
-    # After processing all bytes, if there are no 
+    # After processing all bytes, if there are no
     # incomplete characters, it's valid
     return bytes_left == 0
