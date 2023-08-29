@@ -5,8 +5,11 @@ A module
 
 import sys
 
+
 def is_safe(board, row, col, N):
-    # Check the left side of this row
+    """
+    Check the left side of this row
+    """
     for i in range(col):
         if board[row][i] == 1:
             return False
@@ -23,11 +26,18 @@ def is_safe(board, row, col, N):
 
     return True
 
+
 def solve_nqueens(N):
+    """
+    Solve_nqueens mthod
+    """
     board = [[0 for _ in range(N)] for _ in range(N)]
     solutions = []
 
     def solve_util(col):
+        """
+        utility method
+        """
         if col >= N:
             solution = []
             for i in range(N):
@@ -46,7 +56,11 @@ def solve_nqueens(N):
     solve_util(0)
     return solutions
 
+
 def main():
+    """
+    Entry point
+    """
     if len(sys.argv) != 2:
         print("Usage: nqueens N")
         sys.exit(1)
@@ -65,6 +79,7 @@ def main():
 
     for solution in solutions:
         print(solution)
+
 
 if __name__ == "__main__":
     main()
