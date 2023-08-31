@@ -7,21 +7,28 @@ import sys
 
 
 def nqueens(n):
+    """
+    nqueens method
+    """
     solutions = []
+
     def nqueens_helper(queens, row):
         if row == n:
             solutions.append(queens)
             return
-        
+
         for col in range(n):
             if is_valid(queens, row, col):
                 nqueens_helper(queens + [[row, col]], row + 1)
 
     def is_valid(queens, row, col):
+        """
+        check valid position
+        """
         for queen in queens:
             if queen[1] == col:
                 return False
-            
+
             if abs(queen[0] - row) == abs(queen[1] - col):
                 return False
         return True
