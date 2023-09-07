@@ -11,31 +11,22 @@ const req = require('request');
 const movieId = process.argv[2];
 const url = 'https://swapi-api.alx-tools.com/api/films/${movieId}/';
 
-request(apiUrl, (error, response, body) => {
+req.get(url, (error, response, body) => {
   if (error) {
-    console.error('Error:', error);
-  } else if (response.statusCode !== 200) {
-    console.error('Status Code:', response.statusCode);
+    console.error(error);
   } else {
-    const filmData = JSON.parse(body);
-    
-    // Ensure characters data is available
-    if (filmData && filmData.characters && filmData.characters.length > 0) {
-      // Iterate through character URLs and fetch character names
-      filmData.characters.forEach(characterUrl => {
-        request(characterUrl, (charError, charResponse, charBody) => {
-          if (charError) {
-            console.error('Error fetching character:', charError);
-          } else if (charResponse.statusCode !== 200) {
-            console.error('Status Code:', charResponse.statusCode);
-          } else {
-            const characterData = JSON.parse(charBody);
-            console.log('Character Name:', characterData.name);
-          }
-        });
+    const res = JSON.parse(body);
+    const idan = res.characters;
+    for (let i = 0; i < idan.length; i++) {
+      const ohk = idan[i];
+      req.get(`${ohk}`, (error, response, body) => {
+        if (error) {
+          console.error(error);
+        } else {
+          const newres = JSON.parse(body);
+          console.log(newres.name);
+        }
       });
-    } else {
-      console.error('No character data found for this movie.');
     }
   }
 });
