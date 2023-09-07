@@ -26,11 +26,13 @@ def nqueens(n):
         check valid position
         """
         for queen in queens:
+            print("entered")
             if queen[1] == col:
                 return False
 
             if abs(queen[0] - row) == abs(queen[1] - col):
                 return False
+        print("did not{}".format(queens))
         return True
 
     nqueens_helper([], 0)
