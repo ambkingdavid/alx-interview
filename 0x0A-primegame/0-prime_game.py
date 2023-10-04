@@ -3,6 +3,7 @@
 prime game module
 """
 
+
 def isWinner(x, nums):
     """
     a function that determines the winner of a prime game
@@ -35,7 +36,7 @@ def isWinner(x, nums):
         """
         checks if a number is odd
         """
-        if n % 2:
+        if n % 2 == 0:
             return True
         return False
 
@@ -43,8 +44,8 @@ def isWinner(x, nums):
     ben = 0
 
     for round in range(x):
-        roundList = [num for num in range(nums[round])]
-        if primeNumbers(roundList) == 0:
+        roundList = [num for num in range(1, nums[round] + 1)]
+        if nums[round] == 1:
             ben += 1
         elif is_even(primeNumbers(roundList)):
             ben += 1
