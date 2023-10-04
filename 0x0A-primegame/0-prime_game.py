@@ -6,11 +6,11 @@ prime game module
 
 def isWinner(x, nums):
     """
-    get the winner of the game
+    a function that determines the winner of a prime game
     """
     def is_prime(num):
         """
-        determine if a number is prime
+        checks if a number is prime
         """
         if num < 2:
             return False
@@ -19,32 +19,43 @@ def isWinner(x, nums):
                 return False
         return True
 
-    def play_game(n):
+    def primeNumbers(n):
         """
-        get the winner of each round
+        gets the prime numbers in a list of consecutive numbers
+
+        returns the length of the list
         """
-        primes = [i for i in range(2, n + 1) if is_prime(i)]
-        dp = [False] * (n + 1)
-        dp[0] = False
-        dp[1] = False
+        primeList = []
 
-        for i in range(2, n + 1):
-            dp[i] = not all(dp[i - p] for p in primes if p <= i)
+        for num in n:
+            if is_prime(num):
+                primeList.append(num)
+        return len(primeList)
 
-        return dp[n]
+    def is_even(n):
+        """
+        checks if a number is odd
+        """
+        if n % 2 == 0:
+            return True
+        return False
 
-    maria_wins = 0
-    ben_wins = 0
+    maria = 0
+    ben = 0
 
-    for n in nums:
-        if play_game(n):
-            maria_wins += 1
-        else:
-            ben_wins += 1
-
-    if maria_wins > ben_wins:
-        return "Maria"
-    elif ben_wins > maria_wins:
-        return "Ben"
-    else:
+    if not len(nums):
         return None
+
+    for round in range(x):
+        roundList = [num for num in range(1, nums[round] + 1)]
+        if nums[round] == 1:
+            ben += 1
+        elif is_even(primeNumbers(roundList)):
+            ben += 1
+        else:
+            maria += 1
+    if maria > ben:
+        return "Maria"
+    elif ben > maria:
+        return "Ben"
+    return None
