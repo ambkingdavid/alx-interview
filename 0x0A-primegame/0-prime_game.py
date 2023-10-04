@@ -43,6 +43,9 @@ def isWinner(x, nums):
     maria = 0
     ben = 0
 
+    if not len(nums):
+        return None
+
     for round in range(x):
         roundList = [num for num in range(1, nums[round] + 1)]
         if nums[round] == 1:
