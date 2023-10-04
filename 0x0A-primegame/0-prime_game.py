@@ -5,7 +5,13 @@ prime game module
 
 
 def isWinner(x, nums):
+    """
+    get the winner of the game
+    """
     def is_prime(num):
+        """
+        determine if a number is prime
+        """
         if num < 2:
             return False
         for i in range(2, int(num**0.5) + 1):
@@ -14,6 +20,9 @@ def isWinner(x, nums):
         return True
 
     def play_game(n):
+        """
+        get the winner of each round
+        """
         primes = [i for i in range(2, n + 1) if is_prime(i)]
         dp = [False] * (n + 1)
         dp[0] = False
