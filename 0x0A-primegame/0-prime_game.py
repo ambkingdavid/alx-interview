@@ -22,8 +22,6 @@ def isWinner(x, nums):
     def primeNumbers(n):
         """
         gets the prime numbers in a list of consecutive numbers
-
-        returns the length of the list
         """
         primeList = []
 
