@@ -4,6 +4,7 @@
 Island Perimeter
 """
 
+
 def island_perimeter(grid: list) -> int:
     """
     Island Perimeter
